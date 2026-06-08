@@ -1,0 +1,8 @@
+pandas           # CSV loading and dataframe assembly
+pydantic>=2.0    # schema modeling / LLM output validation
+pyyaml           # config.yaml loading
+python-dotenv    # .env credential loading
+boto3            # S3 ingestion API
+pyarrow          # parquet serialization
+pytest           # unit tests
+# pycelonis_llm  # pre-installed in MLWB; NOT pip-installable locally — keep commented for local dev

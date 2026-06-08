@@ -1,0 +1,25 @@
+# Runtime configuration for the Olist review-analysis pipeline.
+# Committed to git — NEVER put credentials here (those live in .env).
+
+llm:
+  model: "azure-openai-gpt-4-1"   # verify against your tenant's model list
+  temperature: 0                  # deterministic structured extraction
+
+review_analysis:
+  id_column: "review_id"          # business key -> primary key of the output table
+  order_column: "order_id"
+  score_column: "review_score"
+  comment_column: "review_comment_message"
+  # Allowed theme tags the LLM must choose from (closed set keeps output clean).
+  themes:
+    - delivery
+    - product_quality
+    - price
+    - customer_service
+    - packaging
+    - other
+
+ingestion:
+  write_back: false                 # set true ONLY to test the real push; reset to false before merging
+  s3_connection_id: "<id>"          # UUID from the Celonis data ingestion app
+  table_name: "review_insights"     # target table in the Celonis data pool
