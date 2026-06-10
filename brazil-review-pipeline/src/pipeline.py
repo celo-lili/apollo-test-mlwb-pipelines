@@ -56,9 +56,13 @@ def run(
         model = cfg["llm"]["model"]
         temperature = cfg["llm"].get("temperature", 0)
         themes = ra["themes"]
+        urgency_levels = ra["urgency_levels"]
+        recommend_values = ra["recommend_values"]
 
         def classifier(comment: str):  # noqa: E306 — local default classifier
-            return classify_review(client, comment, model, themes, temperature)
+            return classify_review(
+                client, comment, model, themes, urgency_levels, recommend_values, temperature
+            )
 
     rows = []
     for _, r in df.iterrows():
@@ -71,6 +75,10 @@ def run(
                 "sentiment": insight.sentiment,
                 "themes": ",".join(insight.themes),
                 "summary_en": insight.summary_en,
+                "urgency": insight.urgency,
+                "would_recommend": insight.would_recommend,
+                "refund_or_return_request": insight.refund_or_return_request,
+                "actionable": insight.actionable,
             }
         )
 

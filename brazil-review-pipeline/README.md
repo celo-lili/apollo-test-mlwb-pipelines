@@ -8,20 +8,29 @@ For each review with a non-empty comment it extracts:
 | Field        | Meaning                                                        |
 |--------------|----------------------------------------------------------------|
 | `sentiment`  | `positive` / `neutral` / `negative` (from the text, not stars) |
-| `themes`     | tags from a closed set: delivery, product_quality, price, customer_service, packaging, other |
+| `themes`     | tags from a closed set: delivery, product_quality, price, customer_service, packaging, wrong_item, communication, other |
 | `summary_en` | one-sentence English summary of the comment                    |
+| `urgency`    | `low` / `medium` / `high` — how urgently the review needs attention |
+| `would_recommend` | `yes` / `no` / `unclear` — recommendation signal independent of the star score |
+| `refund_or_return_request` | bool — customer asks for a refund, return, or exchange |
+| `actionable` | bool — the review needs a follow-up action from the seller    |
 
 Output table: **`review_insights`**, keyed by `review_id`.
 
+> **Plan, status & Celonis setup:** see **[PROJECT.md](PROJECT.md)**.
 > Built following the `mlwb-python-pipeline` skill. New to the repo? Read the
 > repo-level **[../CONTRIBUTING.md](../CONTRIBUTING.md)** — it explains how the team
 > collaborates with Claude.
+
+The closed-set values (`themes`, `urgency_levels`, `recommend_values`) live in `config.yaml`
+and drive the prompt — **change them there, no code edit needed** (see PROJECT.md → low-code
+editing guide).
 
 ## Project layout
 
 ```
 pipeline.ipynb     # MLWB entry point — first cell tagged "parameters"
-config.yaml        # model, columns, theme list, ingestion flags (no secrets)
+config.yaml        # model, columns, theme list, closed-set values, ingestion flags (no secrets)
 src/               # pipeline logic
   config.py        # get_config() — reloads each call (no caching)
   schema.py        # ReviewInsight pydantic model

@@ -11,13 +11,27 @@ review_analysis:
   score_column: "review_score"
   comment_column: "review_comment_message"
   # Allowed theme tags the LLM must choose from (closed set keeps output clean).
+  # LOW-CODE: add/remove tags here — the prompt is generated from this list, no code change.
   themes:
     - delivery
     - product_quality
     - price
     - customer_service
     - packaging
+    - wrong_item
+    - communication
     - other
+  # Allowed values for the enriched single-choice fields. Also prompt-driven (low-code):
+  # edit these lists to change what the LLM may return. NOTE: quote "yes"/"no" — unquoted
+  # they parse as YAML booleans.
+  urgency_levels:
+    - low
+    - medium
+    - high
+  recommend_values:
+    - "yes"
+    - "no"
+    - unclear
 
 ingestion:
   write_back: false                 # set true ONLY to test the real push; reset to false before merging
