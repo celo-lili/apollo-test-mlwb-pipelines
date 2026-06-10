@@ -1,0 +1,21 @@
+# Credentials
+.env
+
+# Data — never commit real or runtime data.
+# Use /dir/* (not /dir/) so the .gitkeep below can be re-included to track the empty dir.
+test-data/
+input-data/*
+output/*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Keep the empty runtime dirs tracked
+!input-data/.gitkeep
+!output/.gitkeep
